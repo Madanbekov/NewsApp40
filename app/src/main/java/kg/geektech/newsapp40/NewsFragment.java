@@ -1,21 +1,19 @@
 package kg.geektech.newsapp40;
 
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import kg.geektech.newsapp40.databinding.FragmentNewsBinding;
-import kg.geektech.newsapp40.databinding.FragmentProfileBinding;
+import kg.geektech.newsapp40.ui.models.News;
 
 public class NewsFragment extends Fragment {
     private FragmentNewsBinding binding;
@@ -31,21 +29,26 @@ public class NewsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setImage();
+        binding.btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                save();
+            }
+        });
+    }
+    private void save() {
+        String text = binding.etText.getText().toString();
+        News news =new News(text,System.currentTimeMillis());
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("news", news);
+        getParentFragmentManager().setFragmentResult("rk_news",bundle);
+    close();
+
     }
 
-    private void setImage() {
-        ActivityResultLauncher<String> test = registerForActivityResult(new ActivityResultContracts.GetContent(),
-                new ActivityResultCallback<Uri>() {
-                    @Override
-                    public void onActivityResult(Uri uri) {
-                        binding.imgView.setImageURI(uri);
-                    }
-                });
-        binding.imgView.setOnClickListener(view -> {
-            test.launch("image/*");
-
-        });
+    private void close() {
+        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+navController.navigateUp();
     }
 }
 
