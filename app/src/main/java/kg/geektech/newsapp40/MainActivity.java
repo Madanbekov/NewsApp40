@@ -2,7 +2,9 @@ package kg.geektech.newsapp40;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
 
         Prefs prefs= new Prefs(this);
-        if (!prefs.isBoardShown())
+        if (!prefs.isBoardShown()){ navController.navigate(R.id.boardFragment);
         navController.navigate(R.id.boardFragment);
 
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
@@ -60,4 +62,5 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main_menu,menu);
         return true;
 }
+    }
 }

@@ -12,35 +12,32 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
 import kg.geektech.newsapp40.R;
 import kg.geektech.newsapp40.databinding.FragmentNotificationsBinding;
 
 public class NotificationsFragment extends Fragment {
-
-    private NotificationsViewModel notificationsViewModel;
     private FragmentNotificationsBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
-
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-        final TextView textView = binding.textNotifications;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-        return root;
+        binding = FragmentNotificationsBinding.inflate(LayoutInflater.from(requireContext()),
+                container, false);
+        return binding.getRoot();
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        binding.btn.setOnClickListener(view1 -> {
+            YoYo.with(Techniques.Wobble)
+                    .duration(900)
+                    .playOn(binding.etLogin);
+            YoYo.with(Techniques.Wobble)
+                    .duration(900)
+                    .playOn(binding.etPassword);
+        });
     }
 }

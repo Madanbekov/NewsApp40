@@ -11,7 +11,7 @@ import kg.geektech.newsapp40.R;
 import kg.geektech.newsapp40.databinding.ItemBoardBinding;
 
 public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> {
-    private final int[] images = {R.drawable.cherep, R.drawable.strtwo, R.drawable.cherep};
+    private final Integer[] images = {R.raw.shopping, R.raw.robot, R.raw.paper};
     private final String[] titles = {"Добро пожаловать", "Ваши данные в безопасности", "Начнем"};
     private final String[] descriptions = {
             "Это тестовое приложение  \n              NewsApp40 \nНадеюсь вам понравится ",
@@ -58,7 +58,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         public void bind(int position) {
             binding.textTitle.setText(titles[position]);
             binding.textDesc.setText(descriptions[position]);
-            binding.ivBoard.setImageResource(images[position]);
+            binding.ivBoard.setAnimation(images[position]);
 
             if (position == titles.length - 1) {
                 binding.btn.setVisibility(View.VISIBLE);

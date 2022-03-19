@@ -32,4 +32,9 @@ public class Prefs {
         return preferences.getString("picture","");
     }
 
-}
+    public void clear() {
+        preferences.edit().remove("Name").apply();
+        preferences.edit().remove("Photo").apply();
+    }
+    }
+
