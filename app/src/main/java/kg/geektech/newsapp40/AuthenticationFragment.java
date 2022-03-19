@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.FirebaseException;
@@ -110,10 +112,14 @@ binding.btnCheckCode.setVisibility(View.VISIBLE);
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener((Executor) this, (OnCompleteListener<AuthResult>) task -> {
+                .addOnCompleteListener((Executor) this, task -> {
                     if (task.isSuccessful()) {
+                        String phone = mAuth.getCurrentUser().getPhoneNumber();
                         FirebaseUser user = task.getResult().getUser();
-                    }
+                        NavController navController = Navigation.findNavController(requireActivity(),R.id.authenticationFragment);
+                        navController.navigate(R.id.boardFragment);
+                    } else {
+            Toast.makeText(getContext(),"Error",Toast.LENGTH_SHORT).show();}
                 });
     }
 });
